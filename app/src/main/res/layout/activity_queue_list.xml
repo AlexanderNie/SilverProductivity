@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f4f1ec"
+    tools:context="com.example.school.silverproductivity.QueueList">
+
+    <!--
+    <Button
+        android:id="@+id/bBackToWorkload"
+        android:text="Back to my workload"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+        -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="10">
+
+        <ListView
+            android:id="@+id/queueList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:divider="@android:color/transparent"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:background="#000000"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/bBackToWorkload"
+            android:text="Back to My Stories"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fdae1e"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#d7d7d7"
+    tools:context="com.example.school.silverproductivity.AllStoriesList">
+
+    <ImageView
+        android:id="@+id/ivAllUserStories"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop" />
+
+    <!-- android:id="@android:id/list" -->
+    <!-- android:id="@+id/allSameStoryList" -->
+
+    <ListView
+        android:id="@+id/allSameStoryList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#fff"
+        android:divider="@android:color/transparent"
+        android:scrollbars="none" />
+
+</LinearLayout>

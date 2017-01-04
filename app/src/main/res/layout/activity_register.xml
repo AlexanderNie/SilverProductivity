@@ -1,0 +1,101 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#f4f1ec"
+    tools:context="com.example.school.silverproductivity.Register">
+
+
+    <EditText
+        android:id="@+id/etRegUsername"
+        android:hint="Username"
+        android:layout_width="285dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/etbackground"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="285dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etRegPhoneNo"
+            android:inputType="number"
+            android:hint="Phone Number"
+            android:layout_width="245dp"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/etbackground"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </EditText>
+
+        <Button
+            android:id="@+id/bPhoneNoInfo"
+            android:text="i"
+            android:textStyle="bold"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/infobtn"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etDob"
+        android:hint="Date of Birth"
+        android:layout_width="285dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/etbackground"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <EditText
+        android:id="@+id/etRegPassword"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:layout_width="285dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/etbackground"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/etRegConPassword"
+        android:inputType="textPassword"
+        android:hint="Confirm Password"
+        android:layout_width="285dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/etbackground"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/bSubmitRegister"
+        android:layout_width="285dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/registerbtn" />
+
+
+</LinearLayout>

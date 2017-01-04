@@ -1,0 +1,129 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#f4f1ec"
+    tools:context="com.example.school.silverproductivity.RegisterTwo">
+
+    <EditText
+        android:id="@+id/etName"
+        android:hint="Name"
+        android:layout_width="285dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/etbackground"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:text="Gender:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="40dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="5dp" />
+
+    <RadioGroup
+        android:id="@+id/radioSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/radioNone"
+            android:text="@string/radio_none"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingRight="5dp"/>
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:text="@string/radio_male"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingRight="5dp"/>
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:text="@string/radio_female"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingRight="5dp"/>
+
+    </RadioGroup>
+
+
+    <EditText
+        android:id="@+id/etRegAdd"
+        android:hint="Address"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/etbackground"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:lines="5">
+    </EditText>
+
+   <LinearLayout
+       android:layout_width="285dp"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="15dp"
+       android:layout_gravity="center_horizontal"
+       android:orientation="horizontal">
+
+       <LinearLayout
+           android:layout_width="290dp"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1">
+
+           <Button
+               android:id="@+id/bSkip"
+               android:layout_width="match_parent"
+               android:layout_height="65dp"
+               android:layout_marginTop="15dp"
+               android:background="@drawable/skipbtn"
+               android:textAppearance="?android:attr/textAppearanceLarge" />
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1">
+
+           <Button
+               android:id="@+id/bSubmitInfo"
+               android:layout_width="match_parent"
+               android:layout_height="65dp"
+               android:layout_marginTop="15dp"
+               android:background="@drawable/donebtn"
+               android:textAppearance="?android:attr/textAppearanceLarge" />
+
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+
+
+</LinearLayout>
