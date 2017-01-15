@@ -92,6 +92,7 @@
     <string name="title_activity_all_stories_list">AllStoriesList</string>
     <string name="title_activity_each_story_details">EachStoryDetails</string>
     <string name="title_activity_rating_screen">RatingScreen</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>
