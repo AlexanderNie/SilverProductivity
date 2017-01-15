@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +27,7 @@ public class WorkloadDetails extends Activity {
 
     TextView id, date, labels;
     ImageView ivStoryDetail;
-    Button bWriteStory;
+    Button bWriteStory, bShowNearby;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -45,6 +48,9 @@ public class WorkloadDetails extends Activity {
     private static final String TAG_STORY_DATE = "date";
     private static final String TAG_STORY_OCC_DATE = "occDate";
     private static final String TAG_LABELS = "allLabels";
+    private static final String TAG_LAT = "storylat";
+    private static final String TAG_LNG = "storylng";
+
 
     //An array of all of our comments
     private JSONArray aStories = null;
@@ -96,6 +102,16 @@ public class WorkloadDetails extends Activity {
             }
         });
 
+
+        bShowNearby = (Button) findViewById(R.id.bShowNearby);
+        bShowNearby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(WorkloadDetails.this, AttractionMapActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -126,7 +142,13 @@ public class WorkloadDetails extends Activity {
                 String subDate = c.getString(TAG_STORY_DATE);
                 String occDate = c.getString(TAG_STORY_OCC_DATE);
                 String labels = c.getString(TAG_LABELS);
-
+                String lat = c.getString(TAG_LAT);
+                String lng = c.getString(TAG_LNG);
+                LatLng position = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
+//                String tempPath = "http://www.agelesslily.org/liusiyuan/silverproductivity/"+path;
+//                BitmapDrawable bd = new BitmapDrawable(imgLoader.getBitmap(tempPath));
+                Attraction a = new Attraction(position, "", null);
+                AttractionLoader.loadAttraction(a);
 
                 if(imgUrl.matches(path)){
                     storyId = id;
