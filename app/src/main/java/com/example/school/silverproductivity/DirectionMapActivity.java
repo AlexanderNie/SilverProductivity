@@ -2,12 +2,18 @@ package com.example.school.silverproductivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -112,6 +118,17 @@ public class DirectionMapActivity extends BaseDemoActivity {
                 rectLine.add(directionPoint.get(i));
             }
             getMap().addPolyline(rectLine);
+            BitmapDescriptor startIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("iconstart",200,200));
+            Marker start = getMap().addMarker(new MarkerOptions()
+                    .position(new LatLng(Double.valueOf(srsLat), Double.valueOf(srcLng)))
+                    .title("Start Point").snippet("Start Point").
+                            icon(startIcon)
+            );
+
+            BitmapDescriptor endIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("iconend",200,200));
+            getMap().addMarker(new MarkerOptions()
+                    .position(new LatLng(Double.valueOf(tarLat), Double.valueOf(tarLng)))
+                    .title("End Point").snippet("End Point").icon(endIcon));
             getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.290270, 103.851959), 10.0f));
         }
     }
@@ -188,6 +205,12 @@ public class DirectionMapActivity extends BaseDemoActivity {
         //polygonOptions.fillColor(Color.BLUE);
         getMap().addPolyline(polylineOptions);
 
+    }
+
+    private Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
     }
 
 }
