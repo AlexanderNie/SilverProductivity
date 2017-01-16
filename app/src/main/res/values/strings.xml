@@ -24,6 +24,10 @@
     <string name="title_activity_queue_details">QueueDetails</string>
     <string name="title_activity_write_story1">WriteStory1</string>
 
+    <string name="GPSAlertDialogMessage">Please take care GPS Setting</string>
+    <string name="GPSAlertDialogTitle">GPS Alert</string>
+    <string name="cancel">Cancel</string>
+
 
     <string-array name="street_array">
         <item>-Choose-</item>
@@ -92,7 +96,8 @@
     <string name="title_activity_all_stories_list">AllStoriesList</string>
     <string name="title_activity_each_story_details">EachStoryDetails</string>
     <string name="title_activity_rating_screen">RatingScreen</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Nearby Attractions</string>
+    <string name="title_direction_maps">Direction</string>
 
 
 </resources>

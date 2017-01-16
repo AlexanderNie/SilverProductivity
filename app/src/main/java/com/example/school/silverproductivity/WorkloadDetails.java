@@ -27,7 +27,7 @@ public class WorkloadDetails extends Activity {
 
     TextView id, date, labels;
     ImageView ivStoryDetail;
-    Button bWriteStory, bShowNearby;
+    Button bWriteStory, bShowNearby, bGetThere;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -59,6 +59,7 @@ public class WorkloadDetails extends Activity {
     private ArrayList<HashMap<String, String>> aStoriesList;
 
     String storyId, storyPath, storyDate, storyOccDate, storyLabels;
+    LatLng storyLatlng;
     String imgUrl;
     Bitmap img;
 
@@ -112,6 +113,17 @@ public class WorkloadDetails extends Activity {
             }
         });
 
+        bGetThere = (Button) findViewById(R.id.bGetThere);
+        bGetThere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(WorkloadDetails.this, DirectionMapActivity.class);
+                i.putExtra("targetlat", storyLatlng.latitude);
+                i.putExtra("targetlng", storyLatlng.longitude);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -157,6 +169,7 @@ public class WorkloadDetails extends Activity {
                     storyDate = subDate;
                     storyOccDate = occDate;
                     storyLabels = labels;
+                    storyLatlng = position;
                 }
 
             }

@@ -95,22 +95,31 @@
         <LinearLayout
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" android:orientation="horizontal" android:layout_gravity="center">
+            android:layout_width="wrap_content" android:orientation="horizontal" android:layout_gravity="center"
+            android:weightSum="1">
             <Button
                 android:id="@+id/bWriteStory"
-                android:layout_width="fill_parent"
-                android:layout_height="65dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="0"
-                android:background="@drawable/writestorybtn"  />
+                android:layout_weight="2.30"
+                android:background="@drawable/btnwritestory"  />
             <Button
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/bShowNearby"
-                android:layout_width="fill_parent"
-                android:layout_height="65dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="0"
-                android:background="@drawable/shownearbybtn" />
+                android:background="@drawable/btnnearby" />
+            <Button
+                android:layout_marginLeft="20dp"
+                android:id="@+id/bGetThere"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0"
+                android:background="@drawable/btngetthere" />
 
             </LinearLayout>
 

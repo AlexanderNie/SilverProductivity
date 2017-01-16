@@ -99,6 +99,10 @@
         <activity
             android:name=".AttractionMapActivity"
             android:label="@string/title_activity_maps"></activity>
+
+        <activity
+            android:name=".DirectionMapActivity"
+            android:label="@string/title_direction_maps"></activity>
     </application>
 
 </manifest>
