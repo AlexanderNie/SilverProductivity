@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Alexander on 16/1/2017.
@@ -34,6 +37,8 @@ public class DirectionMapActivity extends BaseDemoActivity {
     private ProgressDialog pDialog;
     String srsLat, srcLng, tarLat, tarLng;
     PolylineOptions polylineOptions;
+    List<Polyline> lines = new ArrayList<Polyline>();
+    private int filter = R.id.action_driving;
 
     private static final String ALL_DIRECTION_URL = "https://maps.googleapis.com/maps/api/directions/json?origin=%s,%s&destination=%s,%s&mode=WALKING";
 
@@ -101,9 +106,10 @@ public class DirectionMapActivity extends BaseDemoActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             md = new GMapV2Direction();
+            String mode = filter == R.id.action_driving ?  GMapV2Direction.MODE_DRIVING : GMapV2Direction.MODE_WALKING;
             doc = md.getDocument(new LatLng(Double.valueOf(srsLat), Double.valueOf(srcLng)),
                     new LatLng(Double.valueOf(tarLat), Double.valueOf(tarLng)),
-                    GMapV2Direction.MODE_DRIVING);
+                    mode);
             return null;
         }
 
@@ -117,7 +123,9 @@ public class DirectionMapActivity extends BaseDemoActivity {
             for (int i = 0; i < directionPoint.size(); i++) {
                 rectLine.add(directionPoint.get(i));
             }
-            getMap().addPolyline(rectLine);
+
+            Polyline line =  getMap().addPolyline(rectLine);
+            lines.add(line);
             BitmapDescriptor startIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("iconstart",200,200));
             Marker start = getMap().addMarker(new MarkerOptions()
                     .position(new LatLng(Double.valueOf(srsLat), Double.valueOf(srcLng)))
@@ -204,13 +212,41 @@ public class DirectionMapActivity extends BaseDemoActivity {
         polylineOptions.color(Color.RED);
         //polygonOptions.fillColor(Color.BLUE);
         getMap().addPolyline(polylineOptions);
+    }
 
+    public void clearLines()
+    {
+        for(Polyline line : lines)
+        {
+            line.remove();
+        }
+        lines.clear();
     }
 
     private Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.route_filter, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        clearLines();
+        filter = item.getItemId();
+        getTargetLocation();
+        getGeoInfo();
+        new LoadMapDetails2().execute();
+        return super.onOptionsItemSelected(item);
     }
 
 }
