@@ -2,18 +2,19 @@ package com.example.school.silverproductivity;
 
 
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
 public class Attraction implements ClusterItem {
     public final String name;
-    public final BitmapDrawable profilePhoto;
+    public final int type;
     private final LatLng mPosition;
 
-    public Attraction(LatLng position, String name, BitmapDrawable pictureResource) {
+    public Attraction(LatLng position, String name, int type) {
         this.name = name;
-        profilePhoto = pictureResource;
+        this.type = type;
         mPosition = position;
     }
 

@@ -3,6 +3,8 @@ package com.example.school.silverproductivity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,13 +32,16 @@ import java.util.Random;
 public class AttractionMapActivity extends BaseDemoActivity implements ClusterManager.OnClusterClickListener<Attraction>, ClusterManager.OnClusterInfoWindowClickListener<Attraction>, ClusterManager.OnClusterItemClickListener<Attraction>, ClusterManager.OnClusterItemInfoWindowClickListener<Attraction>{
 
     private ClusterManager<Attraction> mClusterManager;
+    private int filter = R.id.action_all;
     private Random mRandom = new Random(1984);
+    private static final int moutain=1, built=2, coastal=3, forest=4, river =5;
 
     /**
      * Draws profile photos inside markers (using IconGenerator).
      * When there are multiple people in the cluster, draw multiple photos (using MultiDrawable).
      */
     private class AttractionRenderer extends DefaultClusterRenderer<Attraction> {
+        private static final int moutain=1, built=2, coastal=3, forest=4, river =5;
         private final IconGenerator mIconGenerator = new IconGenerator(getApplicationContext());
         private final IconGenerator mClusterIconGenerator = new IconGenerator(getApplicationContext());
         private final ImageView mImageView;
@@ -62,7 +67,7 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
         protected void onBeforeClusterItemRendered(Attraction Attraction, MarkerOptions markerOptions) {
             // Draw a single Attraction.
             // Set the info window to show their name.
-            mImageView.setImageDrawable(Attraction.profilePhoto);
+            mImageView.setImageDrawable(getDrawableByType(Attraction.type));
             Bitmap icon = mIconGenerator.makeIcon();
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(Attraction.name);
         }
@@ -75,27 +80,35 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
             int width = mDimension;
             int height = mDimension;
             Drawable target = null;
-            if (cluster.getItems().size() <5)
-                target = getResources().getDrawable(R.drawable.bubble_lessthan5);
-            else if (cluster.getItems().size() >=5 && cluster.getItems().size() <10)
-                target = getResources().getDrawable(R.drawable.bubble_5to10);
-            else if (cluster.getItems().size() >=10 && cluster.getItems().size() <20)
-                target = getResources().getDrawable(R.drawable.bubble_10to20);
-            else
-                target = getResources().getDrawable(R.drawable.bubble_morethan20);
-
-            for (Attraction p : cluster.getItems()) {
-                // Draw 4 at most.
-                if (profilePhotos.size() == 4) break;
-                //Drawable drawable = p.profilePhoto;
-                Drawable drawable = target;
-                drawable.setBounds(0, 0, width, height);
-                profilePhotos.add(drawable);
+            if (cluster.getItems().size() <=3) {
+                for (Attraction p : cluster.getItems()) {
+                    Drawable drawable = getDrawableByType(p.type);
+                    drawable.setBounds(0, 0, width, height);
+                    profilePhotos.add(drawable);
+                }
+                MultiDrawable multiDrawable = new MultiDrawable(profilePhotos);
+                multiDrawable.setBounds(0, 0, width, height);
+                target = multiDrawable;
             }
-            MultiDrawable multiDrawable = new MultiDrawable(profilePhotos);
-            multiDrawable.setBounds(0, 0, width, height);
+            else if (cluster.getItems().size() >3 && cluster.getItems().size() < 5)
+                target = getResources().getDrawable(R.drawable.icongood);
+            else if (cluster.getItems().size() >=5 && cluster.getItems().size() <10)
+                target = getResources().getDrawable(R.drawable.iconhot);
+            else
+                target = getResources().getDrawable(R.drawable.iconsuper);
 
-            mClusterImageView.setImageDrawable(multiDrawable);
+//            for (Attraction p : cluster.getItems()) {
+//                // Draw 4 at most.
+//                if (profilePhotos.size() == 4) break;
+//                //Drawable drawable = p.profilePhoto;
+//                Drawable drawable = target;
+//                drawable.setBounds(0, 0, width, height);
+//                profilePhotos.add(drawable);
+//            }
+//            MultiDrawable multiDrawable = new MultiDrawable(profilePhotos);
+//            multiDrawable.setBounds(0, 0, width, height);
+
+            mClusterImageView.setImageDrawable(target);
             Bitmap icon = mClusterIconGenerator.makeIcon(String.valueOf(cluster.getSize()));
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
         }
@@ -104,6 +117,30 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
         protected boolean shouldRenderAsCluster(Cluster cluster) {
             // Always render clusters.
             return cluster.getSize() > 1;
+        }
+
+        private Drawable getDrawableByType(int type)
+        {
+            int resrouce = moutain;
+            switch (type)
+            {
+                case moutain:
+                    resrouce = R.drawable.iconmoutain;
+                    break;
+                case coastal:
+                    resrouce = R.drawable.iconcoast;
+                    break;
+                case built:
+                    resrouce = R.drawable.iconbuilt;
+                    break;
+                case river:
+                    resrouce = R.drawable.iconriver;
+                    break;
+                case forest:
+                    resrouce = R.drawable.iconforest;
+                    break;
+            }
+            return getResources().getDrawable(resrouce);
         }
     }
 
@@ -126,7 +163,7 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
 
         // Animate camera to the bounds
         try {
-            Log.d("test==============", "the bound is" +  bounds.toString());;
+            Log.d("attraction_filter==============", "the bound is" +  bounds.toString());;
             getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,7 +192,9 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
     protected void startDemo() {
         getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.290270, 103.851959), 15.0f));
 
+
         mClusterManager = new ClusterManager<Attraction>(this, getMap());
+
         mClusterManager.setRenderer(new AttractionRenderer());
         getMap().setOnCameraIdleListener(mClusterManager);
         getMap().setOnMarkerClickListener(mClusterManager);
@@ -164,15 +203,18 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
         mClusterManager.setOnClusterInfoWindowClickListener(this);
         mClusterManager.setOnClusterItemClickListener(this);
         mClusterManager.setOnClusterItemInfoWindowClickListener(this);
-
         addItems();
         mClusterManager.cluster();
     }
 
     private void addItems() {
         // http://www.flickr.com/photos/sdasmarchives/5036248203/
+        mClusterManager.clearItems();
+        if (filter == R.id.action_none)
+            return;
         for(Attraction a : AttractionLoader.getAttractionList())
-            mClusterManager.addItem(a);
+            if(matchFilterToType(filter, a.type))
+                mClusterManager.addItem(a);
 //
 //        // http://www.flickr.com/photos/usnationalarchives/4726917149/
 //        mClusterManager.addItem(new Attraction(position(), "Gran", R.drawable.gran));
@@ -199,6 +241,18 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
 //        mClusterManager.addItem(new Attraction(position(), "Teach", R.drawable.teacher));
     }
 
+    private boolean matchFilterToType(int filter, int type) {
+        if(filter == R.id.action_building && type == built ||
+                filter == R.id.action_coastal&& type == coastal||
+        filter == R.id.action_forest && type == forest ||
+        filter == R.id.action_moutain && type == moutain ||
+        filter == R.id.action_river && type == river ||
+        filter == R.id.action_all )
+            return true;
+        else
+            return false;
+    }
+
     private LatLng position() {
         return new LatLng(random(51.6723432, 51.38494009999999), random(0.148271, -0.3514683));
     }
@@ -206,4 +260,25 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
     private double random(double min, double max) {
         return mRandom.nextDouble() * (max - min) + min;
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.attraction_filter, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        filter = item.getItemId();
+        mClusterManager.clearItems();
+        addItems();
+        mClusterManager.cluster();
+        return super.onOptionsItemSelected(item);
+    }
+
 }

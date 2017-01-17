@@ -50,6 +50,7 @@ public class WorkloadDetails extends Activity {
     private static final String TAG_LABELS = "allLabels";
     private static final String TAG_LAT = "storylat";
     private static final String TAG_LNG = "storylng";
+    private static final String TAG_TYPE = "storytype";
 
 
     //An array of all of our comments
@@ -156,10 +157,12 @@ public class WorkloadDetails extends Activity {
                 String labels = c.getString(TAG_LABELS);
                 String lat = c.getString(TAG_LAT);
                 String lng = c.getString(TAG_LNG);
+                int type = Integer.valueOf(c.getString(TAG_TYPE));
                 LatLng position = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
 //                String tempPath = "http://www.agelesslily.org/liusiyuan/silverproductivity/"+path;
 //                BitmapDrawable bd = new BitmapDrawable(imgLoader.getBitmap(tempPath));
-                Attraction a = new Attraction(position, "", null);
+
+                Attraction a = new Attraction(position, "", type);
                 AttractionLoader.loadAttraction(a);
 
                 if(imgUrl.matches(path)){
@@ -204,7 +207,7 @@ public class WorkloadDetails extends Activity {
         protected Boolean doInBackground(Void... arg0) {
 
             //we will develop this method in version 2
-
+            AttractionLoader.clearAttraction();
             updateJSONdata();
             return null;
         }

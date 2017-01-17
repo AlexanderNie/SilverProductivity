@@ -18,6 +18,11 @@ public class AttractionLoader {
         }
     }
 
+    public static void clearAttraction()
+    {
+        attractionList.clear();
+    }
+
     public static List<Attraction> getAttractionList()
     {
         return attractionList;

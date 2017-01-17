@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_moutain"
+        android:title="moutain"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+    <item
+        android:id="@+id/action_building"
+        android:title="building"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+    <item
+        android:id="@+id/action_coastal"
+        android:title="coastal"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+
+    <item
+        android:id="@+id/action_forest"
+        android:title="forest"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+    <item
+        android:id="@+id/action_river"
+        android:title="river"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+    <item
+        android:id="@+id/action_all"
+        android:title="no filter"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+    <item
+        android:id="@+id/action_none"
+        android:title="None"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+
+</menu>
