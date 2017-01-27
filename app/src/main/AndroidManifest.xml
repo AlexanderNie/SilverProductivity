@@ -55,6 +55,9 @@
             android:name=".RegisterTwo"
             android:label="@string/title_activity_register_two"></activity>
         <activity
+            android:name=".ResetPwd"
+            android:label="@string/title_activity_resetpwd"></activity>
+        <activity
             android:name=".WorkloadDetails"
             android:label="@string/title_activity_story_details"></activity>
         <activity

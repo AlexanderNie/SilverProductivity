@@ -2,12 +2,15 @@ package com.example.school.silverproductivity;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +38,63 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
     private int filter = R.id.action_all;
     private Random mRandom = new Random(1984);
     private static final int moutain=1, built=2, coastal=3, forest=4, river =5;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LinearLayout routefilter=(LinearLayout)this.findViewById(R.id.routefilter);
+        routefilter.setVisibility(LinearLayout.GONE);
+
+        Button btnmoutain=(Button)this.findViewById(R.id.btnmountain);
+        btnmoutain.setOnClickListener(new CustomListener(moutain));
+
+        Button btnbuilt=(Button)this.findViewById(R.id.btnbuilt);
+        btnbuilt.setOnClickListener(new CustomListener(built));
+
+        Button btncoastal=(Button)this.findViewById(R.id.btncoast);
+        btncoastal.setOnClickListener(new CustomListener(coastal));
+
+        Button btnriver=(Button)this.findViewById(R.id.btnriver);
+        btnriver.setOnClickListener(new CustomListener(river));
+
+        Button btnforest=(Button)this.findViewById(R.id.btnforest);
+        btnforest.setOnClickListener(new CustomListener(forest));
+    }
+
+    private class CustomListener implements View.OnClickListener {
+
+        int m_filter = R.id.action_all;
+
+        public CustomListener(int type)
+        {
+            switch (type)
+            {
+                case moutain:
+                    m_filter = R.id.action_moutain;
+                    break;
+                case river:
+                    m_filter = R.id.action_river;
+                    break;
+                case forest:
+                    m_filter = R.id.action_forest;
+                    break;
+                case coastal:
+                    m_filter = R.id.action_coastal;
+                    break;
+                case built:
+                    m_filter = R.id.action_building;
+                    break;
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            filter = m_filter;
+            mClusterManager.clearItems();
+            addItems();
+            mClusterManager.cluster();
+        }
+    }
 
     /**
      * Draws profile photos inside markers (using IconGenerator).
@@ -163,7 +223,7 @@ public class AttractionMapActivity extends BaseDemoActivity implements ClusterMa
 
         // Animate camera to the bounds
         try {
-            Log.d("attraction_filter==============", "the bound is" +  bounds.toString());;
+            //Log.d("attraction_filter==============", "the bound is" +  bounds.toString());;
             getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
         } catch (Exception e) {
             e.printStackTrace();

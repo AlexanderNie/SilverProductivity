@@ -1,8 +1,6 @@
 package com.example.school.silverproductivity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -16,19 +14,12 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -36,14 +27,33 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 
 // ActionBarActivity
-public class Register extends FragmentActivity {
+public class Register extends FragmentActivity implements View.OnClickListener {
 
     EditText etRegUsername, etRegPhoneNo, etRegPassword, etRegConPassword, etDob;
+
+    private DatePickerDialog dobDatePickerDialog;
+    private SimpleDateFormat dateFormatter;
+
     Button bSubmitRegister, bPhoneNoInfo;
 
     String yearChosen, monthChosen, dayChosen, dateOfBirth;
@@ -82,13 +92,16 @@ public class Register extends FragmentActivity {
         bSubmitRegister = (Button) findViewById(R.id.bSubmitRegister);
         bPhoneNoInfo = (Button) findViewById(R.id.bPhoneNoInfo);
 
-        etDob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PickerDialogs pickerDialogs = new PickerDialogs();
-                pickerDialogs.show(getSupportFragmentManager(), "date_picker");
-            }
-        });
+//        etDob.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PickerDialogs pickerDialogs = new PickerDialogs();
+//                pickerDialogs.show(getSupportFragmentManager(), "date_picker");
+//            }
+//        });
+
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        setDateTimeField();
 
 
         bSubmitRegister.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +109,7 @@ public class Register extends FragmentActivity {
             public void onClick(View v) {
 
                 if(isNetworkAvailable()==true){
+                    //updateDob();
                     new CreateUser().execute();
                 }
                 else {
@@ -125,6 +139,33 @@ public class Register extends FragmentActivity {
             }
         });
 
+    }
+
+    private void updateDob() {
+        Log.d(Register.class.toString(), "updateDob: " +etDob.getText());
+    }
+
+    private void setDateTimeField() {
+        etDob.setOnClickListener(this);
+
+        Calendar newCalendar = Calendar.getInstance();
+        dobDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                etDob.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == etDob) {
+            dobDatePickerDialog.show();
+        }
     }
 
     public class PickerDialogs extends DialogFragment {
@@ -196,9 +237,12 @@ public class Register extends FragmentActivity {
             int success;
             String username = etRegUsername.getText().toString();
             String phoneNumber = etRegPhoneNo.getText().toString();
-            dateOfBirth = yearChosen + "-" + monthChosen + "-" + dayChosen;
+            dateOfBirth = etDob.getText().toString();
             String password = etRegPassword.getText().toString();
+            String orgPassword = password;
+            password = Utils.encryptPassword(password);
             String conPassword = etRegConPassword.getText().toString();
+            conPassword = Utils.encryptPassword(conPassword);
 
             /////////// MOVE HERE
             try {
@@ -210,7 +254,7 @@ public class Register extends FragmentActivity {
                 params.add(new BasicNameValuePair("dateOfBirth", dateOfBirth));
                 params.add(new BasicNameValuePair("password", password));
                 params.add(new BasicNameValuePair("conPassword", conPassword));
-
+                params.add(new BasicNameValuePair("orgPassword", orgPassword));
                 Log.d("request!", "starting");
 
                 //Posting user data to script
@@ -258,6 +302,8 @@ public class Register extends FragmentActivity {
 
         }
     }
+
+
 
     private void phonePopUp(){
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);

@@ -6,8 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,8 +51,47 @@ public class DirectionMapActivity extends BaseDemoActivity {
     private static final String TAG_STEPS = "steps";
     private static final String TAG_START = "start_location";
     private static final String TAG_END = "end_location";
+    private static final int drive = 1, walk =2;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LinearLayout attractionfilter=(LinearLayout)this.findViewById(R.id.attractionfilter);
+        attractionfilter.setVisibility(LinearLayout.GONE);
 
+        Button btndirve=(Button)this.findViewById(R.id.btndirve);
+        btndirve.setOnClickListener(new DirectionMapActivity.CustomListener(drive));
+
+        Button btnwalk=(Button)this.findViewById(R.id.btnwalk);
+        btnwalk.setOnClickListener(new DirectionMapActivity.CustomListener(walk));
+    }
+
+    private class CustomListener implements View.OnClickListener {
+
+        int m_filter;
+
+        public CustomListener(int type)
+        {
+            switch (type)
+            {
+                case drive:
+                    m_filter = R.id.action_driving;
+                    break;
+                case walk:
+                    m_filter = R.id.action_walking;
+                    break;
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            filter = m_filter;
+            clearLines();
+            getTargetLocation();
+            getGeoInfo();
+            new LoadMapDetails2(true).execute();
+        }
+    }
     @Override
     protected void startDemo() {
         getTargetLocation();
@@ -102,7 +145,16 @@ public class DirectionMapActivity extends BaseDemoActivity {
     {
         GMapV2Direction md;
         Document doc;
+        boolean fixCam = false;
 
+        public LoadMapDetails2()
+        {
+
+        }
+        public LoadMapDetails2(boolean fixCam)
+        {
+            this.fixCam = fixCam;
+        }
         @Override
         protected Boolean doInBackground(Void... params) {
             md = new GMapV2Direction();
@@ -137,7 +189,8 @@ public class DirectionMapActivity extends BaseDemoActivity {
             getMap().addMarker(new MarkerOptions()
                     .position(new LatLng(Double.valueOf(tarLat), Double.valueOf(tarLng)))
                     .title("End Point").snippet("End Point").icon(endIcon));
-            getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.290270, 103.851959), 10.0f));
+            if(!fixCam)
+                getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.290270, 103.851959), 10.0f));
         }
     }
 

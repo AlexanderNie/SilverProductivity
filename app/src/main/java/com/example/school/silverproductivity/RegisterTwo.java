@@ -144,7 +144,7 @@ public class RegisterTwo extends Activity {
             radioSexButton = (RadioButton) findViewById(selectedId);
             //Toast.makeText(RegisterTwo.this, radioSexButton.getText(), Toast.LENGTH_SHORT).show();
 
-            String gender = radioSexButton.getText().toString();
+            String gender = radioSexButton.getText().toString().substring(0,1);
             String address = etRegAdd.getText().toString();
 
             try {

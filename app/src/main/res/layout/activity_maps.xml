@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#f4f1ec">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -14,7 +13,88 @@
         tools:context="AttractionMapActivity" >
     </fragment>
 
+    <LinearLayout
+        android:id="@+id/attractionfilter"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btncoast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/iconcoast"
+        />
+        <View
+            android:id="@+id/VerticalLine1"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+        <Button
+            android:id="@+id/btnbuilt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/iconbuilt"
+            />
+        <View
+            android:id="@+id/VerticalLine2"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+        <Button
+            android:id="@+id/btnmountain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/iconmoutain"
+            />
+        <View
+            android:id="@+id/VerticalLine3"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+        <Button
+            android:id="@+id/btnforest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/iconforest"
+            />
+        <View
+            android:id="@+id/VerticalLine4"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+        <Button
+            android:id="@+id/btnriver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/iconriver"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/routefilter"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btndirve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/icondrive"
+            />
+        <View
+            android:id="@+id/VerticalLine5"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+        <Button
+            android:id="@+id/btnwalk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/iconwalk"
+            />
+    </LinearLayout>
 
 
-</LinearLayout>
+
+</FrameLayout>
 

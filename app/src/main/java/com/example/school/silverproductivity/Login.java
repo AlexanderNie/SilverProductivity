@@ -85,6 +85,7 @@ public class Login extends Activity {
                 if(isNetworkAvailable()==true){
                     username = etLoginUsername.getText().toString().toLowerCase();
                     password = etLoginPassword.getText().toString();
+                    password = Utils.encryptPassword(password);
                     iBinder = etLoginUsername.getWindowToken();
                     new AttemptLogin().execute();
                 }
@@ -113,6 +114,14 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Login.this, Register.class);
+                startActivity(i);
+            }
+        });
+
+        bForgotPassLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Login.this, ResetPwd.class);
                 startActivity(i);
             }
         });
