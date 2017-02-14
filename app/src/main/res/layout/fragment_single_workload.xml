@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,5 +15,51 @@
         android:id="@+id/urlText"
         android:layout_width="wrap_content"
         android:layout_height="2dp" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.like.LikeButton
+            android:layout_gravity="center_vertical"
+            app:icon_type="heart"
+            app:icon_size="25dp"
+            android:id="@+id/btnLike"
+            android:layout_height="32dp"
+            android:layout_width="32dp">
+
+        </com.like.LikeButton>
+
+
+        <ImageButton
+            android:layout_gravity="center_vertical"
+            android:id="@+id/btnMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@drawable/messages"
+            android:background="@null"
+            />
+
+
+        <EditText
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:id="@+id/editComments"
+            android:hint="Your Comments"
+            android:layout_weight="1"
+            android:layout_width="500dp" />
+
+        <Button
+            android:layout_gravity="center_vertical"
+                android:id="@+id/btnComments"
+                android:text="Post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </LinearLayout>

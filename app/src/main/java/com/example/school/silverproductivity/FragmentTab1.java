@@ -69,10 +69,9 @@ public class FragmentTab1 extends Fragment {
     private String[] imgList;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        LazyAdapter.setLike(false);
         View view = inflater.inflate(R.layout.fragment_workload, container, false);
-
         getActivity().setTitle("My Stories");
-
         return view;
     }
 
